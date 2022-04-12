@@ -1,0 +1,23 @@
+.element__like {
+    background-image: url(../../../images/like.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 22px;
+    height: 19px;
+    border: 0px;
+    background-color: white;
+}
+
+.element__like:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.element__like:active {
+    background-image: url(../../../images/like-black.svg);
+    opacity: 1;
+}
+
+.element__like:focus {
+    opacity: 0.6;
+}
