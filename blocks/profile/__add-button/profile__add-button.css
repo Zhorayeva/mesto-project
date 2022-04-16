@@ -3,23 +3,18 @@
     height: 50px;
     margin-left: auto;
     background-color: black;
-    border: 1px solid white;
+    border: 2px solid white;
     background-image: url('../../../images/plus.svg');
     background-position: center center;
     background-repeat: no-repeat;
+    border-radius: 2px;
+    transition: ease-in-out 0.2s;
 }
 
 @media screen and (max-width: 767px) {
     .profile__add-button {
         margin-left: 0;
-        width: 100%;
-        padding: 0 calc((100% - (2*282px+17px))/2);
-    }
-}
-
-@media screen and (max-width: 580px) {
-    .profile__add-button {
-        width: calc(100% - 2*19px);
+        width: 282px;
     }
 }
 

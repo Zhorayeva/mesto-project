@@ -10,7 +10,6 @@
 <body class="page">
     <header class="header">
         <img src="./images/Vector.svg" alt="Логотип" class="header__logo">
-        <hr class="header__line">
     </header>
 
     <main class="content">
@@ -18,50 +17,50 @@
             <img src="./images/image.jpg" alt="Аватар" class="profile__avatar">
             <div class="profile__info">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button"></button>
+                <button class="profile__edit-button" type="button"></button>
                 <p class="profile__description">Исследователь океана</p>
             </div>
-            <button class="profile__add-button"></button>
+            <button class="profile__add-button" type="button"></button>
         </section>
         
         <section class="elements">
             <article class="element">
-                <img src="./images/Гора_Рорайма.jpeg" alt="Гора Рораима" class="element__image">
+                <img src="./images/Roraima.jpeg" alt="Гора Рораима" class="element__image">
                 <div class="element__info">
                     <h3 class="element__title">Гора Рораима</h3>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
             <article class="element">
-                <img src="./images/Каньон_антилопы.jpeg" alt="Каньон антилопы" class="element__image">
+                <img src="./images/canyon.jpeg" alt="Каньон антилопы" class="element__image">
                 <div class="element__info">
                     <h3 class="element__title">Каньон антилопы</h3>
                     <button class="element__like"></button>
                 </div>
             </article>
             <article class="element">
-                <img src="./images/Озеро_Морейн.jpeg" alt="Мореин" class="element__image">
+                <img src="./images/morein.jpeg" alt="Мореин" class="element__image">
                 <div class="element__info">
-                    <h3 class="element__title">Озеро_Мореин</h3>
+                    <h3 class="element__title">Озеро Мореин</h3>
                     <button class="element__like"></button>
                 </div>
             </article>
             <article class="element">
-                <img src="./images/Озеро_Ретба.jpeg" alt="Озеро Ретба" class="element__image">
+                <img src="./images/retba.jpeg" alt="Озеро Ретба" class="element__image">
                 <div class="element__info">
                     <h3 class="element__title">Озеро Ретба</h3>
                     <button class="element__like"></button>
                 </div>
             </article>
             <article class="element">
-                <img src="./images/Пещера_Вайтомо.jpeg" alt="Пещера ваитомо" class="element__image">
+                <img src="./images/vaitomo.jpeg" alt="Пещера ваитомо" class="element__image">
                 <div class="element__info">
                     <h3 class="element__title">Пещера ваитомо</h3>
                     <button class="element__like"></button>
                 </div>
             </article>
             <article class="element">
-                <img src="./images/Фингалова_пещера.jpeg" alt="Фингалова пещера" class="element__image">
+                <img src="./images/cave.jpeg" alt="Фингалова пещера" class="element__image">
                 <div class="element__info">
                     <h3 class="element__title">Фингалова пещера</h3>
                     <button class="element__like"></button>
@@ -74,13 +73,13 @@
         <p class="footer__copyright">&copy;2020 Mesto Russia</p>
     </footer>
 
-    <div class="popup popup_opened">
+    <div class="popup">
         <div class="popup__container">
-            <button class="popup__close"></button>
-            <form class="popup__edit-profile">
+            <button class="popup__close" type="button"></button>
+            <form class="popup__form" name="form-info">
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" class="popup__name" id="name" value="Жак-Ив Кусто">
-                <input type="text" class="popup__description" id="description" value="Исследователь океана">
+                <input type="text" class="popup__input popup__input_info_name" name="name" value="Жак-Ив Кусто" placeholder="Введите ваше имя" required>
+                <input type="text" class="popup__input popup__input_info_description" name="description" value="Исследователь океана" placeholder="О себе" required>
                 <button type="submit" class="popup__submit">Сохранить</button>
             </form>
         </div>
