@@ -11,6 +11,7 @@
     top: -40px;
     right: -40px;
     transition: ease-out 0.2s;
+    background-size: contain;
 }
 
 @media screen and (max-width:767px) {
