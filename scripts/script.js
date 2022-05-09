@@ -78,11 +78,6 @@ function addArticleButtonClickHandler(){
     openPopup(articlePopupElement);
 }
 
-function articleFormSubmitHandler(evt){
-    evt.preventDefault();
-    prependElement(elementsList, articleNameInput.value, articleLinkInput.value);
-}
-
 function prependElement(list, name, link){
     const element = elementTemplate.querySelector(".element").cloneNode(true);
     element.querySelector(".element__image").src = link;
@@ -92,6 +87,11 @@ function prependElement(list, name, link){
     element.querySelector(".element__like").addEventListener("click", likeButtonClickHandler);
     element.querySelector(".element__remove").addEventListener("click", removeButtonClickHandler);
     list.prepend(element);
+}
+
+function articleFormSubmitHandler(evt){
+    evt.preventDefault();
+    prependElement(elementsList, articleNameInput.value, articleLinkInput.value);
 }
 
 function loadElements(list, elements){
