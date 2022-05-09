@@ -84,7 +84,7 @@ function articleFormSubmitHandler(evt){
 }
 
 function prependElement(list, name, link){
-    let element = elementTemplate.querySelector(".element").cloneNode(true);
+    const element = elementTemplate.querySelector(".element").cloneNode(true);
     element.querySelector(".element__image").src = link;
     element.querySelector(".element__image").alt = name;
     element.querySelector(".element__image").addEventListener("click", function(){imageClickHandler(popupImage, popupTitle, name, link)});
