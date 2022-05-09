@@ -49,10 +49,12 @@ const popupTitle = document.querySelector(".popup__image_title");
 
 function closePopup(popup){
     popup.classList.remove("popup_opened");
+    popup.classList.add("popup_closed");
 }
 
 function openPopup(popup){
     popup.classList.add("popup_opened");
+    popup.classList.remove("popup_closed");
 }
 
 function editButtonClickHandler(){
