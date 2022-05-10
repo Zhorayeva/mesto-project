@@ -36,11 +36,11 @@ const profileDescriptionInput = document.querySelector(".popup__input_info_descr
 
 const articleFormElement = document.querySelector("#article-form");
 const articlePopupElement = document.querySelector("#article-popup");
-const editProfileButton = document.querySelector(".profile__edit-button");
+const profileEditButton = document.querySelector(".profile__edit-button");
 const addArticleButton = document.querySelector(".profile__add-button");
 const articleNameInput = document.querySelector(".popup__input_image_name");
 const articleLinkInput = document.querySelector(".popup__input_image_link");
-const elementsList = document.querySelector(".elements");
+const elementsContainer = document.querySelector(".elements");
 const elementTemplate = document.querySelector("#article").content;
 
 const imagePopupElement = document.querySelector("#image-popup");
@@ -49,12 +49,10 @@ const popupTitle = document.querySelector(".popup__image_title");
 
 function closePopup(popup){
     popup.classList.remove("popup_opened");
-    popup.classList.add("popup_closed");
 }
 
 function openPopup(popup){
     popup.classList.add("popup_opened");
-    popup.classList.remove("popup_closed");
 }
 
 function editButtonClickHandler(){
@@ -64,10 +62,10 @@ function editButtonClickHandler(){
 }
 
 function closeButtonClickHandler(evt){
-    closePopup(evt.target.parentElement.parentElement);
+    closePopup(evt.target.closest(".popup"));
 }
 
-function profileFormSubmitHandler(evt){
+function submitProfileFormHandler(evt){
     evt.preventDefault();
     profileNameElement.textContent = profileNameInput.value;
     profileDescriptionElement.textContent = profileDescriptionInput.value;
@@ -78,26 +76,32 @@ function addArticleButtonClickHandler(){
     openPopup(articlePopupElement);
 }
 
-function prependElement(list, name, link){
+function createArticleElement(name, link){
     const element = elementTemplate.querySelector(".element").cloneNode(true);
-    element.querySelector(".element__image").src = link;
-    element.querySelector(".element__image").alt = name;
-    element.querySelector(".element__image").addEventListener("click", function(){imageClickHandler(popupImage, popupTitle, name, link)});
+    const imageElement = element.querySelector(".element__image");
+    imageElement.src = link;
+    imageElement.alt = name;
+    imageElement.addEventListener("click", function(){imageClickHandler(name, link)});
     element.querySelector(".element__title").textContent = name;
     element.querySelector(".element__like").addEventListener("click", likeButtonClickHandler);
     element.querySelector(".element__remove").addEventListener("click", removeButtonClickHandler);
-    list.prepend(element);
+    return element;
 }
 
-function articleFormSubmitHandler(evt){
+function prependElement(list, name, link){
+    list.prepend(createArticleElement(name, link));
+}
+
+function submitArticleFormHandler(evt){
     evt.preventDefault();
-    prependElement(elementsList, articleNameInput.value, articleLinkInput.value);
+    prependElement(elementsContainer, articleNameInput.value, articleLinkInput.value);
+    closePopup(articlePopupElement);
+    articleNameInput.value = ""; 
+    articleLinkInput.value = "";
 }
 
 function loadElements(list, elements){
-    for(let i = 0; i < elements.length; i++){
-        prependElement(list, elements[i].name, elements[i].link);
-    }
+    elements.forEach(element => prependElement(list, element.name, element.link));
 }
 
 function likeButtonClickHandler(evt){
@@ -105,19 +109,19 @@ function likeButtonClickHandler(evt){
 }
 
 function removeButtonClickHandler(evt){
-    evt.target.parentElement.remove();
+    evt.target.closest(".element").remove();
 }
 
-function imageClickHandler(imageElement, titleElement, name, link){
-    imageElement.src = link;
-    imageElement.alt = name;
-    titleElement.textContent = name;
+function imageClickHandler(name, link){
+    popupImage.src = link;
+    popupImage.alt = name;
+    popupTitle.textContent = name;
     openPopup(imagePopupElement);
 }
 
-editProfileButton.addEventListener("click", editButtonClickHandler);
+profileEditButton.addEventListener("click", editButtonClickHandler);
 closeButtons.forEach(closeButton => closeButton.addEventListener("click", closeButtonClickHandler));
-profileFormElement.addEventListener("submit", profileFormSubmitHandler);
+profileFormElement.addEventListener("submit", submitProfileFormHandler);
 addArticleButton.addEventListener("click", addArticleButtonClickHandler);
-articleFormElement.addEventListener("submit", articleFormSubmitHandler);
-loadElements(elementsList, initialCards);
+articleFormElement.addEventListener("submit", submitArticleFormHandler);
+loadElements(elementsContainer, initialCards);
