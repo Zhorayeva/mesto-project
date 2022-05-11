@@ -25,7 +25,7 @@ const initialCards = [
     }
 ];
 
-const closeButtons = document.querySelectorAll(".popup__close");
+const closeButtonsList = document.querySelectorAll(".popup__close");
 
 const profileFormElement = document.querySelector("#profile-form");
 const profilePopupElement = document.querySelector("#profile-popup");
@@ -37,7 +37,7 @@ const profileDescriptionInput = document.querySelector(".popup__input_info_descr
 const articleFormElement = document.querySelector("#article-form");
 const articlePopupElement = document.querySelector("#article-popup");
 const profileEditButton = document.querySelector(".profile__edit-button");
-const addArticleButton = document.querySelector(".profile__add-button");
+const articleAddButton = document.querySelector(".profile__add-button");
 const articleNameInput = document.querySelector(".popup__input_image_name");
 const articleLinkInput = document.querySelector(".popup__input_image_link");
 const elementsContainer = document.querySelector(".elements");
@@ -120,8 +120,8 @@ function imageClickHandler(name, link){
 }
 
 profileEditButton.addEventListener("click", editButtonClickHandler);
-closeButtons.forEach(closeButton => closeButton.addEventListener("click", closeButtonClickHandler));
+closeButtonsList.forEach(closeButton => closeButton.addEventListener("click", closeButtonClickHandler));
 profileFormElement.addEventListener("submit", submitProfileFormHandler);
-addArticleButton.addEventListener("click", addArticleButtonClickHandler);
+articleAddButton.addEventListener("click", addArticleButtonClickHandler);
 articleFormElement.addEventListener("submit", submitArticleFormHandler);
 loadElements(elementsContainer, initialCards);
