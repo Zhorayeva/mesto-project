@@ -25,7 +25,7 @@ const initialCards = [
     }
 ];
 
-const closeButtonsList = document.querySelectorAll(".popup__close");
+const popupCloseButtonsList = document.querySelectorAll(".popup__close");
 
 const profileFormElement = document.querySelector("#profile-form");
 const profilePopupElement = document.querySelector("#profile-popup");
@@ -120,7 +120,7 @@ function imageClickHandler(name, link){
 }
 
 profileEditButton.addEventListener("click", editButtonClickHandler);
-closeButtonsList.forEach(closeButton => closeButton.addEventListener("click", closeButtonClickHandler));
+popupCloseButtonsList.forEach(closeButton => closeButton.addEventListener("click", closeButtonClickHandler));
 profileFormElement.addEventListener("submit", submitProfileFormHandler);
 articleAddButton.addEventListener("click", addArticleButtonClickHandler);
 articleFormElement.addEventListener("submit", submitArticleFormHandler);
