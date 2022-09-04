@@ -1,5 +1,6 @@
 import {openPopup, closePopup} from "./modal.js";
 import {prependElement,imageClickHandler, likeButtonClickHandler, removeButtonClickHandler} from "./utils.js";
+import {settings} from "./index.js";
 
 export const initialCards = [
     {
@@ -56,8 +57,9 @@ export function submitArticleFormHandler(evt){
     evt.preventDefault();
     prependElement(elementsContainer, articleNameInput.value, articleLinkInput.value);
     closePopup(articlePopupElement);
-    articleNameInput.value = "";
-    articleLinkInput.value = "";
+    evt.target.reset();
+    evt.submitter.setAttribute('disabled', true);
+    evt.submitter.classList.add(settings.buttonSubmitDisabled);
 }
 
 export function loadElements(list, elements){

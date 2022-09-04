@@ -15,13 +15,15 @@ articleFormElement.addEventListener("submit", submitArticleFormHandler);
 
 loadElements(elementsContainer, initialCards);
 
-enableValidation({
+export const settings = {
     formClass : '.popup__form',
     inputClass : '.popup__input',
     buttonSubmit: '.popup__submit',
     buttonSubmitDisabled : 'popup__submit_disabled',
     inputErrorClass: 'popup__input_type_error'
-});
+};
+
+enableValidation(settings);
 
 
 

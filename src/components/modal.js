@@ -7,18 +7,19 @@ export const popupCloseButtonsList = document.querySelectorAll(".popup__close");
 export function closePopup(popup){
     popup.classList.remove("popup_opened")
     document.removeEventListener('keydown', closeByEsc);
-    popup.removeEventListener('click', closeOverlay);
+    popup.removeEventListener('mousedown', closeOverlay);
 }
 
 export function openPopup(popup){
-    clearPopupErrors(popup);
     popup.classList.add("popup_opened");
     document.addEventListener('keydown', closeByEsc);
-    popup.addEventListener('click', closeOverlay);
+    popup.addEventListener('mousedown', closeOverlay);
 }
 
 const closeOverlay = (evt) => {
-    closePopup(evt.target);
+    if (evt.target === evt.currentTarget) {
+        closePopup(evt.target);
+    };
 }
 
 const closeByEsc = (evt) => {
@@ -27,7 +28,7 @@ const closeByEsc = (evt) => {
     };
 }
 
-const clearPopupErrors = (popup) => {
+export const clearPopupErrors = (popup) => {
     popup.querySelectorAll(".popup__input").forEach((inputElement) => inputElement.classList.remove("popup__input_type_error"));
     popup.querySelectorAll(".popup__input-error").forEach((errorElement) => errorElement.textContent = "");
 }

@@ -1,11 +1,13 @@
-import {openPopup, closePopup, popupImage, popupTitle, imagePopupElement} from "./modal.js";
+import {openPopup, closePopup, popupImage, popupTitle, imagePopupElement,clearPopupErrors} from "./modal.js";
 import {createArticleElement} from "./card.js";
 import {profileDescriptionElement, profileNameElement, profileNameInput, profileDescriptionInput, profilePopupElement} from "./profile.js";
 
 export function editButtonClickHandler(){
+    clearPopupErrors(profilePopupElement);
     profileNameInput.value = profileNameElement.textContent;
     profileDescriptionInput.value = profileDescriptionElement.textContent;
     openPopup(profilePopupElement);
+
 }
 
 export function closeButtonClickHandler(evt){
