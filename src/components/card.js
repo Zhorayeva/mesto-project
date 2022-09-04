@@ -1,5 +1,6 @@
 import {openPopup, closePopup} from "./modal.js";
 import {prependElement,imageClickHandler, likeButtonClickHandler, removeButtonClickHandler} from "./utils.js";
+import {settings} from "./index.js";
 
 export const initialCards = [
     {
@@ -56,10 +57,20 @@ export function submitArticleFormHandler(evt){
     evt.preventDefault();
     prependElement(elementsContainer, articleNameInput.value, articleLinkInput.value);
     closePopup(articlePopupElement);
-    articleNameInput.value = "";
-    articleLinkInput.value = "";
+    evt.target.reset();
+    evt.submitter.setAttribute('disabled', true);
+    evt.submitter.classList.add(settings.buttonSubmitDisabled);
 }
 
 export function loadElements(list, elements){
     elements.forEach(element => prependElement(list, element.name, element.link));
+}
+
+export function getInitialCards(settings){
+    fetch('https://nomoreparties.co/v1/cohort-42/cards', {
+        headers: {
+            authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6'
+        }
+    })
+        .then(res => res.json())
 }
