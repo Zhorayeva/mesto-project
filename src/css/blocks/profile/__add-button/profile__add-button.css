@@ -1,0 +1,29 @@
+.profile__add-button {
+    width: 150px;
+    height: 50px;
+    margin-left: auto;
+    background-color: black;
+    border: 2px solid white;
+    background-image: url('../../../../assets/images/plus.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 2px;
+    transition: ease-in-out 0.2s;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__add-button {
+        margin-left: 0;
+        width: 282px;
+        background: url('../../../../assets/images/plussmall.svg') center center no-repeat;
+    }
+}
+
+.profile__add-button:hover {
+    cursor: pointer; 
+    opacity: 0.6;
+}
+
+.profile__add-button:focus {
+    opacity: 0.6;
+}
