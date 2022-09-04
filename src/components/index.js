@@ -1,5 +1,7 @@
+import '../css/pages/index.css';
+
 import { initialCards, articleAddButton, articleFormElement, loadElements, addArticleButtonClickHandler, submitArticleFormHandler, elementsContainer } from "./card.js";
-import {popupCloseButtonsList, closeEsc, closeOverlay} from "./modal.js";
+import {popupCloseButtonsList} from "./modal.js";
 import {profileFormElement, profileEditButton, submitProfileFormHandler} from "./profile.js";
 import {enableValidation} from "./validate.js";
 import {editButtonClickHandler, closeButtonClickHandler, } from "./utils.js";
@@ -13,11 +15,14 @@ articleFormElement.addEventListener("submit", submitArticleFormHandler);
 
 loadElements(elementsContainer, initialCards);
 
-enableValidation();
+enableValidation({
+    formClass : '.popup__form',
+    inputClass : '.popup__input',
+    buttonSubmit: '.popup__submit',
+    buttonSubmitDisabled : 'popup__submit_disabled',
+    inputErrorClass: 'popup__input_type_error'
+});
 
-closeOverlay();
-
-closeEsc();
 
 
 

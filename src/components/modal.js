@@ -6,26 +6,28 @@ export const popupCloseButtonsList = document.querySelectorAll(".popup__close");
 
 export function closePopup(popup){
     popup.classList.remove("popup_opened")
+    document.removeEventListener('keydown', closeByEsc);
+    popup.removeEventListener('click', closeOverlay);
 }
 
 export function openPopup(popup){
+    clearPopupErrors(popup);
     popup.classList.add("popup_opened");
+    document.addEventListener('keydown', closeByEsc);
+    popup.addEventListener('click', closeOverlay);
 }
 
-export function closeOverlay() {
-    const popupList = Array.from(document.querySelectorAll('.popup'));
-    popupList.forEach((popupElement) => {
-        popupElement.addEventListener('click', (evt) => {
-            closePopup(evt.target);
-        });
-    });
-};
+const closeOverlay = (evt) => {
+    closePopup(evt.target);
+}
 
-export function closeEsc() {
-    document.addEventListener('keydown', (evt) => {
-        console.log(evt.key);
-        if (evt.key === 'Escape') {
-            closePopup(document.querySelector('.popup_opened'));
-        };
-    });
+const closeByEsc = (evt) => {
+    if (evt.key === 'Escape') {
+        closePopup(document.querySelector('.popup_opened'));
+    };
+}
+
+const clearPopupErrors = (popup) => {
+    popup.querySelectorAll(".popup__input").forEach((inputElement) => inputElement.classList.remove("popup__input_type_error"));
+    popup.querySelectorAll(".popup__input-error").forEach((errorElement) => errorElement.textContent = "");
 }
