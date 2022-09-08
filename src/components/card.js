@@ -50,15 +50,20 @@ export function submitArticleFormHandler(evt){
     setButtonText(evt.submitter, true);
     addNewCard(articleNameInput.value, articleLinkInput.value)
         .then((data) => {
-            prependElement(elementsContainer, data.name, data.link, data._id, data.owner);
+            prependElement(elementsContainer, data);
+            closePopup(articlePopupElement);
+            evt.target.reset();
+            evt.submitter.setAttribute('disabled', true);
+            evt.submitter.classList.add(settings.buttonSubmitDisabled);
+        })
+        .catch((error) => {
+            console.log(error);
         })
         .finally(() => {
             setButtonText(evt.submitter, false);
         });
-    closePopup(articlePopupElement);
-    evt.target.reset();
-    evt.submitter.setAttribute('disabled', true);
-    evt.submitter.classList.add(settings.buttonSubmitDisabled);
+
+
 }
 
 export function loadElements(containerElement){

@@ -14,9 +14,6 @@ const fetchResult = (promise) => {
 				return res.json();
 			}
 			return Promise.reject(`something wrong: ${res.statusText}`);
-		})
-		.catch((error) => {
-			console.log(error);
 		});
 }
 
