@@ -22,11 +22,14 @@ export function submitProfileFormHandler(evt){
         .then((data) => {
             profileNameElement.textContent = data.name;
             profileDescriptionElement.textContent = data.about;
+            closePopup(profilePopupElement);
+        })
+        .catch((error) => {
+            console.log(error);
         })
         .finally(() => {
             setButtonText(evt.submitter, false);
         });
-    closePopup(profilePopupElement);
 }
 
 export function submitAvatarHandler (evt) {
@@ -35,11 +38,14 @@ export function submitAvatarHandler (evt) {
     setProfileAvatar(avatarInputElement.value)
         .then((data) => {
             profileAvatar.src = data.avatar;
+            closePopup(profileAvatarPopup);
+        })
+        .catch((error) => {
+            console.log(error);
         })
         .finally(() => {
             setButtonText(evt.submitter, false);
         });
-    closePopup(profileAvatarPopup);
 }
 
 export const loadProfileInfo = () => {

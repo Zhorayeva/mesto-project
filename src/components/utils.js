@@ -2,6 +2,7 @@ import {openPopup, closePopup, popupImage, popupTitle, imagePopupElement,clearPo
 import {createArticleElement} from "./card.js";
 import {profileDescriptionElement, profileNameElement, profileNameInput, profileDescriptionInput, profilePopupElement,profileAvatar, profileAvatarPopup} from "./profile.js";
 import {config, deleteCard, like, unlike} from "./api.js";
+import {data} from "autoprefixer";
 
 export function editButtonClickHandler(){
     clearPopupErrors(profilePopupElement);
@@ -29,21 +30,33 @@ export function likeButtonClickHandler(evt){
         unlike(imageElement.id)
             .then((data) => {
                 likeCounter.textContent = data.likes.length;
+                likeButton.classList.remove("element__like-active");
+            })
+            .catch((error) => {
+                    console.log(error);
             });
     } else {
         like(imageElement.id)
             .then((data) => {
                 likeCounter.textContent = data.likes.length;
+                likeButton.classList.add("element__like-active");
+            })
+            .catch((error) => {
+                console.log(error);
             });
     }
-    likeButton.classList.toggle("element__like-active");
 }
 
 export function removeButtonClickHandler(evt){
     const element = evt.target.closest(".element");
     const imageElement = element.querySelector(".element__image");
-    element.remove();
-    deleteCard(imageElement.id);
+    deleteCard(imageElement.id)
+        .then((data) => {
+            element.remove();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
 
 export function imageClickHandler(name, link){
