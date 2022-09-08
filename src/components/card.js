@@ -1,33 +1,7 @@
 import {openPopup, closePopup} from "./modal.js";
-import {prependElement,imageClickHandler, likeButtonClickHandler, removeButtonClickHandler} from "./utils.js";
+import {prependElement, imageClickHandler, likeButtonClickHandler, removeButtonClickHandler, isMyId, setButtonText} from "./utils.js";
 import {settings} from "./index.js";
-
-export const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+import {getInitialCards, config, addNewCard} from "./api.js";
 
 export const articleFormElement = document.querySelector("#article-form");
 const articlePopupElement = document.querySelector("#article-popup");
@@ -41,27 +15,54 @@ export function addArticleButtonClickHandler(){
     openPopup(articlePopupElement);
 }
 
-export function createArticleElement(name, link){
+export function createArticleElement(cardInfo){
     const element = elementTemplate.querySelector(".element").cloneNode(true);
     const imageElement = element.querySelector(".element__image");
-    imageElement.src = link;
-    imageElement.alt = name;
-    imageElement.addEventListener("click", function(){imageClickHandler(name, link)});
-    element.querySelector(".element__title").textContent = name;
-    element.querySelector(".element__like").addEventListener("click", likeButtonClickHandler);
-    element.querySelector(".element__remove").addEventListener("click", removeButtonClickHandler);
+    const elementRemove = element.querySelector(".element__remove");
+    const likeCounter = element.querySelector(".element__like-counter");
+    const likeButton = element.querySelector(".element__like");
+    imageElement.src = cardInfo.link;
+    imageElement.alt = cardInfo.name;
+    imageElement.id = cardInfo._id;
+    imageElement.addEventListener("click", function(){imageClickHandler(cardInfo.name, cardInfo.link)});
+    element.querySelector(".element__title").textContent = cardInfo.name;
+    likeButton.addEventListener("click", likeButtonClickHandler);
+
+    likeCounter.textContent = cardInfo.likes.length;
+
+    cardInfo.likes.forEach((like) => {
+        if (isMyId(like._id)) {
+            likeButton.classList.add('element__like-active');
+        }
+    });
+
+    if (isMyId(cardInfo.owner._id)) {
+        elementRemove.addEventListener("click", removeButtonClickHandler);
+    } else {
+        elementRemove.remove();
+    }
+
     return element;
 }
 
 export function submitArticleFormHandler(evt){
     evt.preventDefault();
-    prependElement(elementsContainer, articleNameInput.value, articleLinkInput.value);
+    setButtonText(evt.submitter, true);
+    addNewCard(articleNameInput.value, articleLinkInput.value)
+        .then((data) => {
+            prependElement(elementsContainer, data.name, data.link, data._id, data.owner);
+        })
+        .finally(() => {
+            setButtonText(evt.submitter, false);
+        });
     closePopup(articlePopupElement);
     evt.target.reset();
     evt.submitter.setAttribute('disabled', true);
     evt.submitter.classList.add(settings.buttonSubmitDisabled);
 }
 
-export function loadElements(list, elements){
-    elements.forEach(element => prependElement(list, element.name, element.link));
+export function loadElements(containerElement){
+    getInitialCards().then((data) => {
+        data.reverse().forEach(element => prependElement(containerElement, element));
+    });
 }
