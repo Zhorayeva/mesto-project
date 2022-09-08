@@ -4,7 +4,13 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
-    min-height: 30px;
-    padding-left: 36px;
+    min-height: 25px;
+    margin-left: 36px;
     padding-top: 5px;
+}
+
+@media screen and (max-width:767px) {
+    .popup__input-error {
+        margin-left: 22px;
+    }
 }
