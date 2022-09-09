@@ -1,18 +1,10 @@
 import '../css/pages/index.css';
-
-import { articleAddButton, articleFormElement, loadElements, addArticleButtonClickHandler, submitArticleFormHandler, elementsContainer } from "./card.js";
-import {popupCloseButtonsList} from "./modal.js";
-import {
-    profileFormElement,
-    profileEditButton,
-    submitProfileFormHandler,
-    profileAvatarButton,
-    avatarFormElement,
-    submitAvatarHandler,
-    loadProfileInfo
-} from "./profile.js";
+import { loadElements, addArticleButtonClickHandler, submitArticleFormHandler} from "./card.js";
+import {submitProfileFormHandler, submitAvatarHandler, loadProfileInfo, editButtonClickHandler, avatarClickHandler} from "./profile.js";
 import {enableValidation} from "./validate.js";
-import {editButtonClickHandler, closeButtonClickHandler, avatarClickHandler} from "./utils.js";
+import {closeButtonClickHandler} from "./utils.js";
+import {settings, articleAddButton, articleFormElement, elementsContainer, popupCloseButtonsList, profileFormElement, profileEditButton, profileAvatarButton, avatarFormElement, } from "./constants.js";
+import {getInitialCards, getProfileInfo} from "./api.js";
 
 
 profileEditButton.addEventListener("click", editButtonClickHandler);
@@ -23,16 +15,16 @@ articleFormElement.addEventListener("submit", submitArticleFormHandler);
 profileAvatarButton.addEventListener("click", avatarClickHandler);
 avatarFormElement.addEventListener("submit", submitAvatarHandler);
 
-loadElements(elementsContainer);
-loadProfileInfo();
 
-export const settings = {
-    formClass : '.popup__form',
-    inputClass : '.popup__input',
-    buttonSubmit: '.popup__submit',
-    buttonSubmitDisabled : 'popup__submit_disabled',
-    inputErrorClass: 'popup__input_type_error'
-};
+Promise.all([getProfileInfo(), getInitialCards()])
+    .then(([info, cards]) => {
+        loadProfileInfo(info);
+        loadElements(elementsContainer, cards);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
 
 enableValidation(settings);
 
