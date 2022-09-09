@@ -1,19 +1,7 @@
-import {closePopup} from './modal.js'
+import {closePopup, openPopup} from './modal.js'
 import {getProfileInfo, config, setProfileInfo, setProfileAvatar} from "./api.js";
-import {setButtonText} from "./utils.js";
-
-export const profileEditButton = document.querySelector(".profile__edit-button");
-export const profileFormElement = document.querySelector("#profile-form");
-export const profilePopupElement = document.querySelector("#profile-popup");
-export const profileNameElement = document.querySelector(".profile__name");
-export const profileDescriptionElement = document.querySelector(".profile__description");
-export const profileNameInput = document.querySelector(".popup__input_info_name");
-export const profileDescriptionInput = document.querySelector(".popup__input_info_description");
-export const profileAvatarButton = document.querySelector(".profile__avatar-button");
-export const profileAvatar = document.querySelector(".profile__avatar");
-export const profileAvatarPopup = document.querySelector("#avatar-change");
-export const avatarFormElement = document.querySelector('#avatar-form');
-const avatarInputElement = document.querySelector("#avatar-input");
+import {setButtonText, clearPopupErrors} from "./utils.js";
+import {settings, profileNameInput, profileDescriptionInput, profileNameElement, profileDescriptionElement, profilePopupElement,profileAvatarPopup,avatarInputElement, profileAvatar} from "./constants.js";
 
 export function submitProfileFormHandler(evt){
     evt.preventDefault();
@@ -32,6 +20,10 @@ export function submitProfileFormHandler(evt){
         });
 }
 
+export function avatarClickHandler (evt) {
+    openPopup(profileAvatarPopup);
+}
+
 export function submitAvatarHandler (evt) {
     evt.preventDefault();
     setButtonText(evt.submitter, true);
@@ -39,6 +31,9 @@ export function submitAvatarHandler (evt) {
         .then((data) => {
             profileAvatar.src = data.avatar;
             closePopup(profileAvatarPopup);
+            evt.target.reset();
+            evt.submitter.setAttribute('disabled', true);
+            evt.submitter.classList.add(settings.buttonSubmitDisabled);
         })
         .catch((error) => {
             console.log(error);
@@ -48,13 +43,18 @@ export function submitAvatarHandler (evt) {
         });
 }
 
-export const loadProfileInfo = () => {
-    getProfileInfo().then((data) => {
+export const loadProfileInfo = (data) => {
         profileAvatar.src = data.avatar;
         profileNameElement.textContent = data.name;
         profileDescriptionElement.textContent = data.about;
         config.myId = data._id;
         profileNameElement.id = data._id;
-    })
+}
+
+export function editButtonClickHandler(){
+    clearPopupErrors(profilePopupElement);
+    profileNameInput.value = profileNameElement.textContent;
+    profileDescriptionInput.value = profileDescriptionElement.textContent;
+    openPopup(profilePopupElement);
 }
 

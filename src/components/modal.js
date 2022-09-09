@@ -1,9 +1,3 @@
-export const imagePopupElement = document.querySelector("#image-popup");
-export const popupImage = document.querySelector(".popup__image");
-export const popupTitle = document.querySelector(".popup__image_title");
-
-export const popupCloseButtonsList = document.querySelectorAll(".popup__close");
-
 export function closePopup(popup){
     popup.classList.remove("popup_opened")
     document.removeEventListener('keydown', closeByEsc);
@@ -28,7 +22,3 @@ const closeByEsc = (evt) => {
     };
 }
 
-export const clearPopupErrors = (popup) => {
-    popup.querySelectorAll(".popup__input").forEach((inputElement) => inputElement.classList.remove("popup__input_type_error"));
-    popup.querySelectorAll(".popup__input-error").forEach((errorElement) => errorElement.textContent = "");
-}

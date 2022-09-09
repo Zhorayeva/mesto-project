@@ -1,18 +1,56 @@
 import {openPopup, closePopup} from "./modal.js";
-import {prependElement, imageClickHandler, likeButtonClickHandler, removeButtonClickHandler, isMyId, setButtonText} from "./utils.js";
-import {settings} from "./index.js";
-import {getInitialCards, config, addNewCard} from "./api.js";
-
-export const articleFormElement = document.querySelector("#article-form");
-const articlePopupElement = document.querySelector("#article-popup");
-export const articleAddButton = document.querySelector(".profile__add-button");
-const articleNameInput = document.querySelector(".popup__input_image_name");
-const articleLinkInput = document.querySelector(".popup__input_image_link");
-export const elementsContainer = document.querySelector(".elements");
-const elementTemplate = document.querySelector("#article").content;
+import {prependElement, isMyId, setButtonText} from "./utils.js";
+import {getInitialCards, addNewCard, unlike, like, deleteCard} from "./api.js";
+import {articlePopupElement, elementsContainer, elementTemplate, articleNameInput, articleLinkInput, settings, popupImage, popupTitle, imagePopupElement} from "./constants";
 
 export function addArticleButtonClickHandler(){
     openPopup(articlePopupElement);
+}
+
+function likeButtonClickHandler(evt){
+    const likeButton = evt.target;
+    const cardElement = likeButton.closest(".element");
+    const imageElement = cardElement.querySelector(".element__image");
+    const likeCounter = cardElement.querySelector(".element__like-counter");
+
+    if (likeButton.classList.contains("element__like-active")){
+        unlike(imageElement.id)
+            .then((data) => {
+                likeCounter.textContent = data.likes.length;
+                likeButton.classList.remove("element__like-active");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    } else {
+        like(imageElement.id)
+            .then((data) => {
+                likeCounter.textContent = data.likes.length;
+                likeButton.classList.add("element__like-active");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+function removeButtonClickHandler(evt){
+    const element = evt.target.closest(".element");
+    const imageElement = element.querySelector(".element__image");
+    deleteCard(imageElement.id)
+        .then((data) => {
+            element.remove();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function imageClickHandler(name, link){
+    popupImage.src = link;
+    popupImage.alt = name;
+    popupTitle.textContent = name;
+    openPopup(imagePopupElement);
 }
 
 export function createArticleElement(cardInfo){
@@ -66,8 +104,6 @@ export function submitArticleFormHandler(evt){
 
 }
 
-export function loadElements(containerElement){
-    getInitialCards().then((data) => {
+export function loadElements(containerElement, data){
         data.reverse().forEach(element => prependElement(containerElement, element));
-    });
 }
